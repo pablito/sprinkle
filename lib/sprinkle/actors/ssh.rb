@@ -91,11 +91,11 @@ module Sprinkle
 
         def transfer_to_host(source, destination, host, recursive, gateway = nil)
           if gateway # SSH connection via gateway
-            gateway.ssh(host, @options[:user]) do |ssh|
+            gateway.ssh(host, @options[:user], :password=>@options[:password]) do |ssh|
               transfer_on_connection(source, destination, recursive, ssh)
             end
           else # direct SSH connection
-            Net::SSH.start(host, @options[:user]) do |ssh|
+            Net::SSH.start(host, @options[:user], :password=>@options[:password]) do |ssh|
               transfer_on_connection(source, destination, recursive, ssh)
             end
           end
